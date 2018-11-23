@@ -7,7 +7,7 @@
  *  Implements hook_node_view_alter(). 
  */
 function simpler_rss_page_node_view_alter(&$build) {
-  if ($build['#bundle'] != 'rss_page') {
+  if (!($build['#bundle'] == 'rss_page' || $build['#bundle'] == 'portal_page')) {
     return;
   }
   if (!empty($build['body']['nav'])) {
@@ -20,6 +20,7 @@ function simpler_rss_page_node_view_alter(&$build) {
     );
     $regexp_filter = array(
       '|\<a href="[^"]+\?byfeed=\d+" class="feed-item-source active">.*?\</a> - |',
+      '|\<span class="feed-item-date">.*?\</span>|',
     );
     
     foreach ($build['body']['body'] as $i => $item) {
